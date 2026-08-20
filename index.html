@@ -24,7 +24,14 @@
 
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="page-loaded">
+
+<div class="page-transition" data-page-transition aria-hidden="true"></div>
+<div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+<nav class="section-nav" data-section-nav aria-label="Navigation rapide entre les sections"></nav>
+<button class="back-to-top" data-back-to-top aria-label="Revenir en haut de page" type="button">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <!-- ===================== HEADER ===================== -->
 <header class="site-header">
@@ -63,7 +70,7 @@
 <main>
 
   <!-- ===================== HERO ===================== -->
-  <section class="hero">
+  <section class="hero" data-nav="Accueil">
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Vencraft · Votre business, notre art</p>
@@ -117,7 +124,7 @@
   <div class="container"><div class="divider-stitch"></div></div>
 
   <!-- ===================== DIFFÉRENCE PÉDAGOGIQUE ===================== -->
-  <section class="section on-paper">
+  <section class="section on-paper" data-nav="Comparer">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow">Comprendre les deux solutions</p>
@@ -162,7 +169,7 @@
   </section>
 
   <!-- ===================== APERÇU DES OFFRES ===================== -->
-  <section class="section" id="offres">
+  <section class="section" id="offres" data-nav="Offres">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow">Nos deux catégories</p>
@@ -245,7 +252,7 @@
   </section>
 
   <!-- ===================== COMMENT ÇA MARCHE ===================== -->
-  <section class="section on-paper">
+  <section class="section on-paper" data-nav="Étapes">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow">Le parcours</p>
@@ -273,7 +280,7 @@
   </section>
 
   <!-- ===================== CTA FINAL ===================== -->
-  <section class="section-tight">
+  <section class="section-tight" data-nav="Contact">
     <div class="container center reveal">
       <p class="eyebrow" style="justify-content:center">Prêt à démarrer ?</p>
       <h2 class="display" style="margin:14px auto 22px;max-width:20ch">Construisons votre vitrine, à votre rythme.</h2>

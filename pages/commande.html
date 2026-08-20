@@ -22,7 +22,14 @@
 
 <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="page-loaded">
+
+<div class="page-transition" data-page-transition aria-hidden="true"></div>
+<div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+<nav class="section-nav" data-section-nav aria-label="Navigation rapide entre les sections"></nav>
+<button class="back-to-top" data-back-to-top aria-label="Revenir en haut de page" type="button">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <!-- ===================== HEADER ===================== -->
 <header class="site-header">
@@ -55,7 +62,7 @@
 </header>
 
 <main>
-  <section class="hero" style="padding-bottom:20px;">
+  <section class="hero" style="padding-bottom:20px;" data-nav="Formulaire">
     <div class="container">
       <p class="eyebrow">Formulaire de sélection</p>
       <h1 class="display" style="max-width:20ch">Dites-nous ce qui vous intéresse.</h1>
@@ -63,7 +70,7 @@
     </div>
   </section>
 
-  <section class="section-tight">
+  <section class="section-tight" data-nav="Sélection">
     <div class="container">
       <div class="selector-shell" data-selection-flow>
 

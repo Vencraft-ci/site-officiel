@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollReveal();
   initSelectionFlow();
   initYear();
+  initScrollProgress();
+  initSectionNav();
+  initBackToTop();
+  initRipple();
+  initMagnetic();
+  initTilt();
+  initPageTransition();
 });
 
 /* ---------------- mobile nav ---------------- */
@@ -55,6 +62,20 @@ function initScrollReveal() {
     items.forEach((el) => el.classList.add("in"));
     return;
   }
+
+  // group siblings that reveal together so they cascade instead of popping at once
+  const groups = new Map();
+  items.forEach((el) => {
+    const parent = el.parentElement;
+    if (!groups.has(parent)) groups.set(parent, []);
+    groups.get(parent).push(el);
+  });
+  groups.forEach((siblings) => {
+    siblings.forEach((el, i) => {
+      el.style.setProperty("--reveal-delay", `${Math.min(i, 6) * 70}ms`);
+    });
+  });
+
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -67,6 +88,142 @@ function initScrollReveal() {
     { threshold: 0.14, rootMargin: "0px 0px -60px 0px" }
   );
   items.forEach((el) => io.observe(el));
+}
+
+/* ---------------- scroll progress thread ---------------- */
+function initScrollProgress() {
+  const bar = document.querySelector("[data-scroll-progress]");
+  if (!bar) return;
+  const update = () => {
+    const el = document.documentElement;
+    const scrollable = el.scrollHeight - el.clientHeight;
+    bar.style.width = scrollable > 0 ? `${(el.scrollTop / scrollable) * 100}%` : "0%";
+  };
+  document.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+}
+
+/* ---------------- section dot rail: click straight to any beat ---------------- */
+function initSectionNav() {
+  const sections = Array.from(document.querySelectorAll("main > section[data-nav]"));
+  const host = document.querySelector("[data-section-nav]");
+  if (!sections.length || !host) return;
+
+  const links = sections.map((sec) => {
+    if (!sec.id) sec.id = "beat-" + Math.random().toString(36).slice(2, 8);
+    const a = document.createElement("a");
+    a.href = "#" + sec.id;
+    a.setAttribute("aria-label", sec.dataset.nav);
+    a.innerHTML = `<span class="snl">${sec.dataset.nav}</span>`;
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    host.appendChild(a);
+    return a;
+  });
+
+  if (!("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const idx = sections.indexOf(entry.target);
+        links.forEach((l) => l.classList.remove("active"));
+        if (links[idx]) links[idx].classList.add("active");
+      });
+    },
+    { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+  );
+  sections.forEach((s) => io.observe(s));
+}
+
+/* ---------------- back to top ---------------- */
+function initBackToTop() {
+  const btn = document.querySelector("[data-back-to-top]");
+  if (!btn) return;
+  document.addEventListener(
+    "scroll",
+    () => btn.classList.toggle("show", window.scrollY > 560),
+    { passive: true }
+  );
+  btn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+}
+
+/* ---------------- ripple on click ---------------- */
+function initRipple() {
+  document.addEventListener("click", (e) => {
+    const target = e.target.closest(".btn, .choice-card");
+    if (!target || target.hasAttribute("disabled")) return;
+    const r = target.getBoundingClientRect();
+    const size = Math.max(r.width, r.height) * 1.8;
+    const span = document.createElement("span");
+    span.className = "ripple";
+    span.style.width = span.style.height = `${size}px`;
+    span.style.left = `${e.clientX - r.left - size / 2}px`;
+    span.style.top = `${e.clientY - r.top - size / 2}px`;
+    target.appendChild(span);
+    span.addEventListener("animationend", () => span.remove());
+  });
+}
+
+/* ---------------- magnetic primary buttons ---------------- */
+function initMagnetic() {
+  if (!window.matchMedia("(pointer:fine)").matches) return;
+  document.querySelectorAll(".btn-gold, .btn-catalogue, .btn-site").forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      const mx = e.clientX - (r.left + r.width / 2);
+      const my = e.clientY - (r.top + r.height / 2);
+      el.style.transition = "transform .12s linear";
+      el.style.transform = `translate(${mx * 0.18}px, ${my * 0.3 - 2}px)`;
+    });
+    el.addEventListener("mouseleave", () => {
+      el.style.transition = "transform .4s var(--ease)";
+      el.style.transform = "";
+    });
+  });
+}
+
+/* ---------------- tilt + cursor-glow on cards (informational cards only —
+   choice-card is a real form control, so it stays flat for precise clicking) ---------------- */
+function initTilt() {
+  if (!window.matchMedia("(pointer:fine)").matches) return;
+  const els = document.querySelectorAll(".offer-card, .compare-card, .contact-card, .path-side");
+  els.forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      el.style.setProperty("--mx", `${px * 100}%`);
+      el.style.setProperty("--my", `${py * 100}%`);
+      if (el.classList.contains("path-side")) return; // hero panels stay put, glow only
+      const rx = (0.5 - py) * 7;
+      const ry = (px - 0.5) * 9;
+      el.style.transition = "transform .08s linear";
+      el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px) scale(1.012)`;
+    });
+    el.addEventListener("mouseleave", () => {
+      el.style.transition = "transform .5s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease)";
+      el.style.transform = "";
+    });
+  });
+}
+
+/* ---------------- page transition on internal navigation ---------------- */
+function initPageTransition() {
+  const overlay = document.querySelector("[data-page-transition]");
+  if (!overlay) return;
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const href = a.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("http") || a.target === "_blank") return;
+    e.preventDefault();
+    overlay.classList.add("leaving");
+    setTimeout(() => { window.location.href = href; }, 380);
+  });
 }
 
 function initYear() {
@@ -302,5 +459,12 @@ document.addEventListener("click", (e) => {
   const track = btn.getAttribute("data-track");
   const offer = btn.getAttribute("data-offer");
   const base = btn.getAttribute("data-base") || "commande.html";
-  window.location.href = `${base}?track=${encodeURIComponent(track)}&offer=${encodeURIComponent(offer)}`;
+  const dest = `${base}?track=${encodeURIComponent(track)}&offer=${encodeURIComponent(offer)}`;
+  const overlay = document.querySelector("[data-page-transition]");
+  if (overlay) {
+    overlay.classList.add("leaving");
+    setTimeout(() => { window.location.href = dest; }, 380);
+  } else {
+    window.location.href = dest;
+  }
 });
