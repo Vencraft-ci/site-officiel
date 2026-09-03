@@ -1,0 +1,827 @@
+/* ===========================
+   Vencraft-CI — Mini-site
+   =========================== */
+
+:root {
+  --violet: #6C4CF1;
+  --violet-fonce: #4B2FD1;
+  --violet-clair: #9C86F7;
+  --fond-clair: #F8F7FC;
+  --anthracite: #1C1B29;
+  --gris-moyen: #6B6880;
+  --vert-succes: #2FBE7A;
+  --corail: #FF7A59;      /* couleur secondaire, complémentaire du violet */
+  --corail-fonce: #E85F3F;
+
+  --font-titre: 'Poppins', sans-serif;
+  --font-texte: 'Inter', sans-serif;
+
+  --transition-douce: 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-texte);
+  color: var(--anthracite);
+  background: var(--fond-clair);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-titre);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.25;
+}
+
+p { margin: 0; }
+
+a { text-decoration: none; color: inherit; }
+
+img { max-width: 100%; display: block; }
+
+section, header, footer {
+  padding: 72px 24px;
+  scroll-margin-top: 64px;
+}
+
+/* ---- Barre de navigation ---- */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(248, 247, 252, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 16px rgba(28,27,41,0.06);
+}
+
+.topnav-logo img {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.topnav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topnav-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #E7E2FA;
+  color: var(--violet-fonce);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-douce), color var(--transition-douce), transform var(--transition-douce), box-shadow var(--transition-douce);
+}
+.topnav-icon:hover {
+  background: var(--violet);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(108,76,241,0.25);
+}
+
+.topnav-cta {
+  display: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  background: var(--corail);
+  padding: 9px 18px;
+  border-radius: 999px;
+  transition: background var(--transition-douce), transform var(--transition-douce), box-shadow var(--transition-douce);
+  white-space: nowrap;
+}
+.topnav-cta:hover {
+  background: var(--corail-fonce);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(232,95,63,0.3);
+}
+
+/* ---- CTA flottant permanent ---- */
+.floating-cta {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--vert-succes);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 13px 20px;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(47,190,122,0.35);
+  animation: pulseSoft 3.2s ease-in-out infinite;
+  transition: transform var(--transition-douce), box-shadow var(--transition-douce);
+}
+.floating-cta:hover {
+  background: #26a267;
+  transform: translateY(-3px);
+  animation-play-state: paused;
+}
+.floating-cta .btn-icon { font-size: 1rem; }
+
+/* ---- Filtre photo (teinte violette/froide unifiée) ----
+   S'applique par-dessus les vraies photos une fois ajoutées.
+   Le fond en dégradé sert de placeholder tant que les images
+   « Dépassement de soi » / « Tranquillité » ne sont pas fournies. */
+.photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(75,47,209,0.35), rgba(108,76,241,0.15));
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---- Emplacements d'image à remplacer ----
+   Repère visuel clair pour savoir où glisser vos propres photos.
+   À supprimer une fois l'image réelle posée en background-image. */
+.image-placeholder {
+  position: relative;
+}
+.placeholder-mark {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 20px;
+  color: var(--violet-fonce);
+  border: 2px dashed rgba(75,47,209,0.35);
+  border-radius: inherit;
+  margin: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+  pointer-events: none;
+}
+.placeholder-mark--light {
+  color: white;
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* Repère discret en coin, pour les sections où une image de fond
+   partage l'espace avec du texte déjà présent (hero, mouvement). */
+.placeholder-corner {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: white;
+  background: rgba(28,27,41,0.5);
+  border: 1px dashed rgba(255,255,255,0.6);
+  padding: 6px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+}
+
+/* ---- Apparition au scroll ---- */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.reveal-up    { transform: translateY(28px); }
+.reveal-left  { transform: translateX(-60px); }
+.reveal-right { transform: translateX(60px); }
+.reveal-scale { transform: scale(0.94); }
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* ---- Entrée au chargement (Hero) ---- */
+.hero-in {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: heroIn 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.hero-in--1 { animation-delay: 0.1s; }
+.hero-in--2 { animation-delay: 0.25s; }
+.hero-in--3 { animation-delay: 0.4s; }
+.hero-in--4 { animation-delay: 0.55s; }
+.hero-in--5 { animation-delay: 0.9s; }
+
+@keyframes heroIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- Boutons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px 30px;
+  border-radius: 999px;
+  font-family: var(--font-texte);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-douce), box-shadow var(--transition-douce), background var(--transition-douce);
+}
+
+.btn-primary {
+  background: white;
+  color: var(--violet-fonce);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+}
+.btn-primary:active { transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--violet-fonce);
+  border: 1.5px solid var(--violet);
+  margin-top: 24px;
+}
+.btn-outline:hover {
+  background: var(--violet);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(108,76,241,0.28);
+}
+
+.btn-contact {
+  background: var(--violet);
+  color: white;
+  box-shadow: 0 4px 14px rgba(108, 76, 241, 0.3);
+  width: 100%;
+}
+.btn-contact:hover {
+  background: var(--violet-fonce);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(75, 47, 209, 0.4);
+}
+.btn-contact--whatsapp {
+  background: var(--vert-succes);
+  box-shadow: 0 4px 14px rgba(47, 190, 122, 0.3);
+  animation: pulseSoft 3.2s ease-in-out infinite;
+}
+.btn-contact--whatsapp:hover {
+  background: #26a267;
+  box-shadow: 0 10px 24px rgba(38, 162, 103, 0.4);
+  animation-play-state: paused;
+}
+
+@keyframes pulseSoft {
+  0%, 100% { box-shadow: 0 4px 14px rgba(47, 190, 122, 0.3); }
+  50%      { box-shadow: 0 4px 26px rgba(47, 190, 122, 0.55); }
+}
+
+.btn-icon { font-size: 1.1rem; }
+
+/* ---- Contrôle du son ---- */
+.sound-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(28, 27, 41, 0.55);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background var(--transition-douce), transform var(--transition-douce);
+}
+.sound-toggle:hover { background: var(--violet-fonce); transform: scale(1.08); }
+.sound-toggle:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* ---- Hero (Section 1) ---- */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  overflow: hidden;
+  background-image: linear-gradient(180deg, rgba(58, 42, 128, 0.75) 0%, rgba(108, 76, 241, 0.85) 100%), url('../images/depassement-de-soi.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28,27,41,0.35) 0%, rgba(75,47,209,0.55) 100%);
+}
+
+.hero-blobs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.35;
+  animation: floatBlob 12s ease-in-out infinite;
+}
+.blob-1 {
+  width: 320px; height: 320px;
+  top: -80px; left: -60px;
+  background: var(--violet-clair);
+}
+.blob-2 {
+  width: 260px; height: 260px;
+  bottom: -60px; right: -40px;
+  background: var(--vert-succes);
+  animation-duration: 15s;
+  animation-delay: -4s;
+}
+.blob-3 {
+  width: 200px; height: 200px;
+  top: 40%; right: 10%;
+  background: var(--corail);
+  opacity: 0.22;
+  animation-duration: 10s;
+  animation-delay: -2s;
+}
+
+@keyframes floatBlob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(30px, -20px) scale(1.08); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  color: white;
+}
+
+.logo {
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 40px;
+}
+.logo span { color: #D9CFFF; }
+
+.hero h1 {
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  margin-bottom: 20px;
+  background: linear-gradient(100deg, #ffffff 30%, #D9CFFF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 480px;
+  margin: 0 auto 28px;
+}
+
+.hero-chips {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.chip {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.35);
+  padding: 6px 16px;
+  border-radius: 999px;
+  backdrop-filter: blur(2px);
+}
+.chip:nth-child(2) {
+  background: rgba(255,122,89,0.22);
+  border-color: rgba(255,122,89,0.5);
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 12px;
+}
+.scroll-cue span {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  border-radius: 2px;
+  background: white;
+  animation: scrollCue 1.8s ease-in-out infinite;
+}
+@keyframes scrollCue {
+  0%   { opacity: 1; top: 6px; }
+  60%  { opacity: 0.2; top: 16px; }
+  100% { opacity: 0; top: 16px; }
+}
+
+/* ---- Présentation (Section 2) ---- */
+.presentation-grid {
+  display: grid;
+  gap: 40px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.presentation-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 20px;
+  overflow: hidden;
+  background-image: url('../images/tranquillite.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #E4DFFB;
+}
+.presentation-text h2 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 18px;
+  color: var(--anthracite);
+}
+.text-accent {
+  background: linear-gradient(100deg, var(--violet) 20%, var(--violet-fonce) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.presentation-text p {
+  color: var(--gris-moyen);
+  font-size: 1.05rem;
+  max-width: 480px;
+}
+
+/* ---- Offres (Section 3) ---- */
+.offres {
+  position: relative;
+  background: linear-gradient(180deg, #FBF6F4 0%, #F3EEFC 55%, white 100%);
+  max-width: none;
+  margin: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.offres-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.offres > h2 {
+  text-align: center;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 48px;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text-accent-corail {
+  background: linear-gradient(100deg, var(--corail) 20%, var(--corail-fonce) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.offre-card {
+  background: white;
+  border-radius: 24px;
+  padding: 36px 28px;
+  margin: 0 auto 24px;
+  max-width: 1080px;
+  box-shadow: 0 8px 24px rgba(75,47,209,0.06);
+  transition: transform var(--transition-douce), box-shadow var(--transition-douce);
+}
+.offre-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(28,27,41,0.08);
+}
+.offre-card:last-child { margin-bottom: 0; }
+
+.offre-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--violet-fonce);
+  background: #E9E3FD;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.offre-tag--accent {
+  color: var(--corail-fonce);
+  background: #FFE7E0;
+}
+
+.offre-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.offre-card p {
+  color: var(--gris-moyen);
+  font-size: 1rem;
+  max-width: 560px;
+}
+
+.offre-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.offre-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--anthracite);
+}
+.offre-icon { font-size: 1.1rem; }
+
+.pricing {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.price-block {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1.5px solid #E7E2FA;
+  position: relative;
+  transition: transform var(--transition-douce);
+}
+.price-block:hover { transform: translateY(-2px); }
+
+.price-block--highlight {
+  border-color: var(--violet);
+  background: linear-gradient(160deg, #F3F0FE 0%, white 100%);
+}
+
+.price-badge {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  background: var(--vert-succes);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.price-label {
+  font-size: 0.85rem;
+  color: var(--gris-moyen);
+}
+
+.price-value {
+  font-family: var(--font-titre);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--violet-fonce);
+}
+
+.price-period {
+  font-family: var(--font-texte);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--gris-moyen);
+}
+
+.price-detail {
+  font-size: 0.85rem;
+  color: var(--gris-moyen);
+}
+
+/* ---- Le mouvement (Section 4) ---- */
+.mouvement {
+  position: relative;
+  min-height: 46vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  background-image: linear-gradient(180deg, rgba(75, 47, 209, 0.8) 0%, rgba(108, 76, 241, 0.85) 100%), url('../images/depassement-de-sois.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mouvement-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(28,27,41,0.3);
+}
+
+.mouvement-content {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  color: white;
+  padding: 0 16px;
+}
+
+.quote-mark {
+  display: block;
+  font-family: var(--font-titre);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--corail);
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.quote {
+  font-family: var(--font-titre);
+  font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.mouvement-sub {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.95rem;
+}
+
+/* ---- Contact (Section 5) ---- */
+.contact {
+  position: relative;
+  text-align: center;
+}
+
+.contact-inner {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.contact > h2 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: 32px;
+}
+
+.contact-title-bg {
+  display: inline-block;
+  background: linear-gradient(120deg, #F3EEFC 0%, #FBF0EC 100%);
+  color: var(--anthracite);
+  padding: 12px 26px;
+  border-radius: 16px;
+}
+
+.contact-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ---- Footer ---- */
+.footer {
+  text-align: center;
+  background: var(--anthracite);
+  color: rgba(255,255,255,0.8);
+  padding: 48px 24px;
+}
+
+.footer-logo {
+  font-family: var(--font-titre);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+}
+.footer-logo span { color: #B9A8FF; }
+
+.footer-logo-img {
+  height: 30px;
+  width: auto;
+  margin: 0 auto;
+}
+
+.footer-tagline {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.footer-copy, .footer-email {
+  margin-top: 18px;
+  font-size: 0.85rem;
+}
+
+.footer-email a:hover { color: white; }
+
+.footer-socials {
+  margin-top: 20px;
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+.footer-socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.75);
+  transition: background var(--transition-douce), color var(--transition-douce), transform var(--transition-douce);
+}
+.footer-socials a:hover {
+  background: var(--violet);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   Tablette et desktop
+   =========================== */
+@media (min-width: 720px) {
+  .topnav-cta { display: inline-flex; align-items: center; }
+
+  .presentation-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .pricing {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-buttons {
+    flex-direction: row;
+  }
+
+  .btn-contact { width: auto; flex: 1; }
+}
+
+@media (min-width: 1024px) {
+  section, header, footer { padding: 100px 24px; }
+
+  .offre-card { padding: 44px 48px; }
+}

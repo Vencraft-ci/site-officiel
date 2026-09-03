@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vencraft-CI — Votre business, notre art</title>
+<meta name="description" content="Vencraft-CI accompagne les commerçants et entrepreneurs de Côte d'Ivoire avec des outils simples pour gérer, vendre et grandir.">
+
+<!-- Aperçu de partage (réseaux sociaux / résultats de recherche) -->
+<meta property="og:title" content="Vencraft-CI — Votre business, notre art">
+<meta property="og:description" content="Des outils simples pour gérer, vendre et grandir votre business en Côte d'Ivoire.">
+<meta property="og:image" content="images/preview.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="images/preview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+<body>
+
+<!-- Barre de navigation -->
+<nav class="topnav">
+  <a href="#hero" class="topnav-logo">
+    <img src="images/logo-wordmark.png" alt="Vencraft-CI — Votre business, notre art">
+  </a>
+  <div class="topnav-actions">
+    <a href="https://whatsapp.com/channel/0029VbDfOID96H4U1sIm740B" target="_blank" rel="noopener" class="topnav-icon" aria-label="Chaîne WhatsApp">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.4.1-.2 0-.4 0-.5C10 8.9 9.4 7.5 9.2 7c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3ZM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.4 5.1L2 22l5.1-1.3c1.4.8 3.1 1.2 4.9 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2Z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/vencr.aft?igsi=bzA2NHdlZzJpeHls" target="_blank" rel="noopener" class="topnav-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+    </a>
+    <a href="#contact" class="topnav-cta">Nous contacter</a>
+  </div>
+</nav>
+
+<!-- CTA flottant permanent -->
+<a href="https://wa.me/2250151030957" target="_blank" rel="noopener" class="floating-cta">
+  <span class="btn-icon">💬</span> Discuter sur WhatsApp
+</a>
+
+
+<!-- Contrôle du son -->
+<button id="sound-toggle" class="sound-toggle" aria-label="Activer le son" aria-pressed="false">
+  <svg id="icon-muted" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+  <svg id="icon-unmuted" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none">
+    <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
+    <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+    <path d="M18.5 5.5a9 9 0 0 1 0 13"/>
+  </svg>
+</button>
+<audio id="bg-audio" loop preload="none">
+  <!-- Remplacer par le fichier audio libre de droits fourni par Vencraft (MP3, <1 Mo) -->
+  <source src="audio/ambiance.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Section 1 — Hero -->
+<header class="hero" id="hero">
+  <div class="hero-veil"></div>
+  <div class="hero-blobs" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-in hero-in--2">Aux côtés de ceux qui bâtissent.</h1>
+    <p class="hero-sub hero-in hero-in--3">Vencraft-CI accompagne les commerçants et entrepreneurs de Côte d'Ivoire avec des outils simples pour gérer, vendre et grandir.</p>
+
+    <div class="hero-chips hero-in hero-in--4" aria-hidden="true">
+      <span class="chip">Simple</span>
+      <span class="chip">Rapide</span>
+      <span class="chip">Humain</span>
+    </div>
+
+    <a href="#presentation" class="btn btn-primary hero-in hero-in--5">Découvrir Vencraft</a>
+  </div>
+  <div class="scroll-cue hero-in hero-in--6" aria-hidden="true"><span></span></div>
+</header>
+
+<!-- Section 2 — Présentation -->
+<section class="presentation" id="presentation">
+  <div class="presentation-grid">
+    <div class="presentation-image reveal reveal-left" aria-hidden="true">
+      <div class="photo-overlay"></div>
+    </div>
+    <div class="presentation-text reveal reveal-right">
+      <h2>L'art de bâtir, <span class="text-accent">simplifié.</span></h2>
+      <p>Chaque jour, des commerçants ivoiriens se lèvent tôt pour faire grandir leur activité. Vencraft leur donne les outils pour vendre, gérer et avancer l'esprit tranquille.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3 — Nos offres -->
+<section class="offres" id="offres">
+  <h2 class="reveal reveal-up">Ce que nous <span class="text-accent-corail">proposons</span></h2>
+
+  <div class="offre-card reveal reveal-up">
+    <span class="offre-tag">Logiciel de gestion</span>
+    <h3>Vencraft, votre caisse et votre stock simplifiés</h3>
+    <p>Gérez vos ventes, votre stock et votre argent depuis votre téléphone ou votre ordinateur, sans complications.</p>
+
+    <div class="pricing">
+      <div class="price-block">
+        <span class="price-label">Mensuel</span>
+        <span class="price-value">4 900 FCFA<span class="price-period">/mois</span></span>
+        <span class="price-detail">Sans engagement</span>
+      </div>
+      <div class="price-block price-block--highlight">
+        <span class="price-badge">Économisez 16,7%</span>
+        <span class="price-label">6 mois</span>
+        <span class="price-value">24 500 FCFA</span>
+        <span class="price-detail">Soit 4 083 FCFA/mois</span>
+      </div>
+    </div>
+
+    <a href="#contact" class="btn btn-outline">Je veux en savoir plus</a>
+  </div>
+
+  <div class="offre-card reveal reveal-up">
+    <span class="offre-tag offre-tag--accent">Site &amp; catalogue</span>
+    <h3>Votre activité mérite une vitrine</h3>
+    <p>Nous créons votre site ou votre catalogue de vente en ligne, à l'image de votre business.</p>
+
+    <ul class="offre-highlights">
+      <li><span class="offre-icon">🌐</span> Site vitrine sur mesure</li>
+      <li><span class="offre-icon">🛍️</span> Catalogue de vente en ligne</li>
+      <li><span class="offre-icon">⚡</span> Rapide, simple, à votre image</li>
+    </ul>
+
+    <a href="#contact" class="btn btn-outline">Je veux en savoir plus</a>
+  </div>
+</section>
+
+<!-- Section 4 — Le mouvement -->
+<section class="mouvement image-placeholder reveal reveal-scale" id="mouvement">
+  <div class="mouvement-veil"></div>
+  <div class="photo-overlay"></div>
+  <div class="mouvement-content">
+    <span class="quote-mark" aria-hidden="true">”</span>
+    <p class="quote">Chaque bâtisseur a besoin d'un outil qui va aussi vite que lui.</p>
+    <p class="mouvement-sub">Vencraft-CI — Votre business, notre art.</p>
+  </div>
+</section>
+
+<!-- Section 5 — Contact -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2 class="reveal reveal-up"><span class="contact-title-bg">Parlons de votre business</span></h2>
+    <div class="contact-buttons reveal reveal-up">
+      <a href="tel:0798016927" class="btn btn-contact">
+        <span class="btn-icon">📞</span> Appeler maintenant
+      </a>
+      <a href="https://wa.me/2250151030957" class="btn btn-contact btn-contact--whatsapp" target="_blank" rel="noopener">
+        <span class="btn-icon">💬</span> Écrire sur WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <img src="images/logo-white.png" alt="Vencraft-CI" class="footer-logo-img">
+  <p class="footer-tagline">Votre business, notre art</p>
+  <p class="footer-copy">© 2026 Vencraft-CI — Tous droits réservés</p>
+  <p class="footer-email"><a href="mailto:vencraft254@gmail.com">vencraft254@gmail.com</a></p>
+  <div class="footer-socials">
+    <a href="https://www.facebook.com/share/1CHUKBr8S7/" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.9h-2.34V22c4.78-.8 8.44-4.95 8.44-9.94Z"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@havenixcicatalogue?_r=1&_t=ZS-99Q7dgxi1uk" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 0 1-3.02-3.42h-2.9v13.02a2.6 2.6 0 1 1-2.6-2.6c.27 0 .53.04.78.11V9.98a5.5 5.5 0 1 0 4.72 5.44V9.36a7.2 7.2 0 0 0 4.02 1.22V7.7c-.35 0-.68-.03-1-.1a4.28 4.28 0 0 1-1-1.78Z"/></svg>
+    </a>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
