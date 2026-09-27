@@ -48,3 +48,18 @@ function updateIcon() {
   toggleBtn.setAttribute('aria-pressed', String(soundOn));
   toggleBtn.setAttribute('aria-label', soundOn ? 'Couper le son' : 'Activer le son');
 }
+
+// --- Secteurs : dépliant progressif ---
+const sectorsBtn = document.getElementById('sectors-btn');
+const sectorsPanel = document.getElementById('sectors-panel');
+
+if (sectorsBtn && sectorsPanel) {
+  sectorsBtn.addEventListener('click', () => {
+    const isOpen = sectorsPanel.classList.toggle('is-open');
+    sectorsBtn.classList.toggle('is-open', isOpen);
+    sectorsBtn.setAttribute('aria-expanded', String(isOpen));
+    sectorsBtn.querySelector('span').textContent = isOpen
+      ? 'Masquer les secteurs'
+      : 'Voir les secteurs que nous accompagnons';
+  });
+}
