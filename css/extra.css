@@ -1,0 +1,546 @@
+/* ===========================
+   Vencraft-CI — Extra (chargé après style.css)
+   =========================== */
+
+/* ---- Simple / Rapide / Humain : soulignés, couleurs différentes ---- */
+.hero-chips span.chip { font-size: 0.95rem; font-weight: 700; padding-bottom: 4px; }
+.hero-chips span.chip::before { display: none; }
+.chip--violet { color: var(--violet-fonce); box-shadow: 0 3px 0 var(--violet); }
+.chip--corail { color: var(--corail-fonce); box-shadow: 0 3px 0 var(--corail); }
+.chip--vert   { color: #1c9a60; box-shadow: 0 3px 0 var(--vert-succes); }
+
+/* ---- Titres de bloc ---- */
+.block-kicker { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--corail-fonce); }
+.block-title { margin-top: 6px; font-family: var(--font-titre); font-size: clamp(1.3rem, 3vw, 1.7rem); color: var(--anthracite); }
+.offer-list > * { min-width: 0; }
+.offer-sectors { min-width: 0; }
+
+/* ---- Bouton de dépliage des tarifs ---- */
+.sectors-btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 8px;
+  max-width: 100%;
+  padding: 13px 16px 13px 24px;
+  gap: 14px;
+  text-align: left;
+  line-height: 1.3;
+  font-family: var(--font-texte);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--violet-fonce);
+  background: white;
+  border: 1.5px solid var(--violet);
+  border-radius: var(--rayon-pill);
+  box-shadow: 0 12px 26px -16px rgba(75,47,209,0.55);
+  cursor: pointer;
+  transition: transform var(--transition-elastique), box-shadow var(--transition-douce), color var(--transition-douce), border-color var(--transition-douce);
+}
+.sectors-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, var(--violet) 0%, var(--corail) 100%);
+  opacity: 0;
+  transition: opacity var(--transition-douce);
+}
+.sectors-btn:hover,
+.sectors-btn.is-open {
+  color: white;
+  border-color: transparent;
+}
+.sectors-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 32px -14px rgba(75,47,209,0.6); }
+.sectors-btn:hover::before,
+.sectors-btn.is-open::before { opacity: 1; }
+.sectors-btn:focus-visible { outline: 3px solid var(--corail); outline-offset: 3px; }
+.sectors-btn .sectors-btn-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(108,76,241,0.12);
+  color: inherit;
+  font-weight: 700;
+  transition: transform var(--transition-douce), background var(--transition-douce);
+}
+.sectors-btn .sectors-btn-icon::before { font-size: 1.15rem; }
+.sectors-btn:hover .sectors-btn-icon,
+.sectors-btn.is-open .sectors-btn-icon { background: rgba(255,255,255,0.25); }
+
+/* ---- Panneau dépliant des tarifs (fermé par défaut) ---- */
+.sectors-panel {
+  min-width: 0;
+  margin-left: -6px;
+  margin-right: -6px;
+  padding: 0 6px;
+  visibility: hidden;
+  transition:
+    max-height 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.45s ease,
+    padding 0.65s cubic-bezier(0.22, 0.61, 0.36, 1),
+    visibility 0s linear 0.65s;
+}
+.sectors-panel.is-open {
+  max-height: 1200px;
+  padding-top: 4px;
+  padding-bottom: 12px;
+  visibility: visible;
+  transition-delay: 0s, 0s, 0s, 0s;
+}
+
+@media (max-width: 479px) {
+  .sectors-btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 12px 14px 12px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ---- Tarifs ---- */
+.tariff-panel { margin-top: 24px; padding: 24px 22px; border-radius: var(--rayon-carte); background: linear-gradient(160deg, #F3EEFC 0%, #FBF6F4 100%); }
+.tariff-label { font-family: var(--font-titre); font-weight: 700; font-size: 1rem; color: var(--anthracite); }
+.tariff-grid { margin-top: 16px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.tier { background: white; border-radius: 14px; padding: 14px 16px; border-left: 4px solid var(--violet); box-shadow: 0 8px 18px -14px rgba(75,47,209,0.4); }
+.tier:nth-child(2) { border-left-color: var(--violet-clair); }
+.tier:nth-child(3) { border-left-color: var(--vert-succes); }
+.tier--devis { border-left-color: var(--corail); background: #FFF1EC; }
+.tier-range { font-size: 0.74rem; font-weight: 700; color: var(--gris-moyen); text-transform: uppercase; letter-spacing: 0.03em; }
+.tier-line { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-top: 6px; font-size: 0.82rem; color: var(--anthracite); }
+.tier-line b { font-family: var(--font-titre); font-size: 1.05rem; color: var(--violet-fonce); white-space: nowrap; }
+.tier--devis .tier-line b { color: var(--corail-fonce); }
+
+/* ---- Défilement horizontal + barre indicatrice ---- */
+.hscroll { margin-top: 22px; min-width: 0; }
+.hs-track {
+  display: flex; gap: 18px; overflow-x: auto; padding: 14px 4px 18px;
+  scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; cursor: grab;
+}
+.hs-track::-webkit-scrollbar { display: none; }
+.hs-track.is-drag { cursor: grabbing; scroll-snap-type: none; }
+.hs-track.is-drag * { pointer-events: none; }
+.hs-item { flex: 0 0 auto; scroll-snap-align: start; }
+
+.hs-foot { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+.hs-bar { position: relative; flex: 1; height: 6px; border-radius: 999px; background: rgba(108,76,241,0.14); overflow: hidden; }
+.hs-bar span {
+  position: absolute; top: 0; left: 0; height: 100%; width: 30%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--violet), var(--corail));
+  box-shadow: 0 0 12px var(--violet-glow);
+}
+.hs-hint { font-size: 0.8rem; font-weight: 700; color: var(--violet-fonce); white-space: nowrap; }
+.hs-hint b { display: inline-block; color: var(--corail); animation: ctaArrowNudge 1.2s ease-in-out infinite; }
+.hs-hint.is-end { opacity: 0.4; }
+.hscroll.no-scroll .hs-foot { display: none; }
+
+/* ---- Cartes image (secteurs) : grandes et très visuelles ---- */
+.sector-card {
+  width: 250px; background: white; border-radius: 26px; padding: 8px;
+  border: 1px solid rgba(108,76,241,0.14);
+  box-shadow: 0 18px 36px -20px rgba(75,47,209,0.4);
+  position: relative; isolation: isolate;
+  transition: transform var(--transition-elastique), box-shadow var(--transition-douce);
+}
+.sector-card::before {
+  content: ""; position: absolute; inset: -1.5px; z-index: -1; border-radius: 27px;
+  background: linear-gradient(135deg, var(--violet), var(--corail), var(--violet-clair));
+  opacity: 0; transition: opacity var(--transition-douce);
+}
+.sector-card:hover { transform: translateY(-6px); box-shadow: 0 26px 46px -18px rgba(75,47,209,0.5); }
+.sector-card:hover::before { opacity: 1; }
+
+.sector-media {
+  position: relative; height: 360px; border-radius: 19px; overflow: hidden;
+  background-color: var(--violet-clair);
+  background-image: linear-gradient(150deg, #8f77f7, #ff9c80);
+  background-size: 100%; background-position: center;
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 18px;
+  transition: background-size 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.sector-card:hover .sector-media { background-size: 112%; }
+.sector-media-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,27,41,0) 40%, rgba(28,27,41,0.82) 100%); }
+.sector-emoji {
+  position: absolute; top: 12px; left: 12px; z-index: 2; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+  background: rgba(255,255,255,0.88); backdrop-filter: blur(8px); border-radius: 13px;
+}
+.sector-title, .sector-items { position: relative; z-index: 2; color: white; }
+.sector-title { font-family: var(--font-titre); font-size: 1.25rem; line-height: 1.2; }
+.sector-title::after { content: ""; display: block; width: 30px; height: 3px; border-radius: 2px; margin-top: 8px; background: linear-gradient(90deg, var(--violet-clair), var(--corail)); }
+.sector-items { margin-top: 8px; font-size: 0.78rem; opacity: 0.88; }
+
+/* ---- Formules logiciel : plus larges, moins hautes ---- */
+.hs-track--plans { padding-top: 22px; }
+.hs-track--plans .plan { margin-top: 0; min-height: 440px; display: flex; flex-direction: column; padding: 26px 22px; }
+.hs-track--plans .plan:not(.plan-highlight) { width: 310px; }
+.hs-track--plans .plan-highlight { width: 310px; }
+.hs-track--plans .plan-features { flex: 1; }
+.hs-track--plans .plan-tag { left: 22px; }
+.hs-track--plans .plan-price { font-size: 1.3rem; white-space: nowrap; }
+.hs-track--plans .plan-price span { font-size: 0.8rem; }
+.hs-track--plans .plan-features li { font-size: 0.88rem; }
+.hs-track--plans .plan-cta-note { font-size: 0.84rem; line-height: 1.35; }
+.plan-price-alt { margin-top: 4px; font-size: 0.82rem; color: var(--gris-moyen); }
+.plan-price-alt b { color: var(--corail-fonce); }
+.plan-highlight .plan-price-alt { color: rgba(255,255,255,0.7); }
+.plan-highlight .plan-price-alt b { color: #FFDCCF; }
+
+/* ---- Carte vidéo ---- */
+.video-card { width: 380px; align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+.video-frame {
+  position: relative; aspect-ratio: 16 / 10; border-radius: 24px; overflow: hidden;
+  background: linear-gradient(150deg, var(--violet-fonce), var(--violet) 60%, var(--corail));
+  padding: 6px; box-shadow: 0 26px 50px -22px rgba(75,47,209,0.6);
+}
+.video-frame video { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background: var(--noir-profond); }
+.video-glow { position: absolute; inset: -30%; background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 60%); pointer-events: none; }
+.video-caption { margin-top: 14px; display: flex; align-items: center; gap: 12px; }
+.video-live { width: 10px; height: 10px; border-radius: 50%; background: var(--corail); flex-shrink: 0; animation: ctaPulse 1.6s ease-in-out infinite; }
+.video-caption p { font-family: var(--font-titre); font-weight: 700; font-size: 1.05rem; color: var(--anthracite); }
+.video-caption span { display: block; font-size: 0.82rem; color: var(--gris-moyen); }
+
+/* ---- Stock Lite / Étagère / Caméras : cartes plus larges, moins hautes ---- */
+.offer-lite { padding-top: 8px; }
+.lite-card { width: 265px; display: flex; flex-direction: column; }
+.lite-card--main { width: 285px; background: var(--anthracite); border-color: var(--anthracite); }
+.lite-card .sector-media { height: 140px; }
+.lite-tag {
+  position: absolute; top: 12px; right: 12px; z-index: 2; font-size: 0.7rem; font-weight: 700;
+  color: white; background: var(--corail); padding: 5px 12px; border-radius: 999px;
+}
+.lite-body { padding: 12px 8px 4px; display: flex; flex-direction: column; flex: 1; }
+.lite-price { font-family: var(--font-titre); font-weight: 800; font-size: 1.35rem; color: var(--violet-fonce); }
+.lite-note { font-size: 0.78rem; font-weight: 600; color: var(--corail-fonce); margin-top: 2px; }
+.lite-body ul { margin: 14px 0 16px; display: flex; flex-direction: column; gap: 8px; }
+.lite-body li { position: relative; padding-left: 22px; font-size: 0.88rem; font-weight: 500; color: var(--anthracite); }
+.lite-body li::before { content: "✓"; position: absolute; left: 0; color: var(--vert-succes); font-weight: 800; }
+.lite-body .btn { margin-top: auto; padding: 14px 12px; font-size: 0.9rem; text-align: center; }
+.lite-card--main .lite-price { color: white; }
+.lite-card--main .lite-note { color: #FFDCCF; }
+.lite-card--main .lite-body li { color: rgba(255,255,255,0.92); }
+
+@media (max-width: 479px) {
+  .sector-card { width: 228px; }
+  .sector-media { height: 330px; }
+  .hs-track--plans .plan:not(.plan-highlight) { width: 285px; }
+  .hs-track--plans .plan-highlight { width: 285px; }
+  .hs-track--plans .plan-price { font-size: 1.25rem; }
+  .hs-track--plans .plan-price-alt { font-size: 0.78rem; }
+  .video-card { width: 290px; }
+  .lite-card { width: 250px; }
+  .lite-card--main { width: 265px; }
+  .lite-body .btn { font-size: 0.86rem; }
+  .lite-card .sector-media { height: 130px; }
+}
+/* ===========================
+   BLOC « SITE VITRINE… » — apparition rejouable, design premium
+   (caché seulement si le JS est actif : sinon tout reste visible)
+   =========================== */
+.offer-list-items { counter-reset: item; gap: 14px; }
+.offer-list-items li {
+  counter-increment: item;
+  position: relative;
+  overflow: hidden;
+  padding: 14px 18px 14px 14px;
+  background: rgba(255,255,255,0.82);
+  border: 1px solid rgba(108,76,241,0.16);
+  border-radius: 18px;
+  box-shadow: 0 14px 28px -18px rgba(75,47,209,0.45);
+  transition: transform var(--transition-elastique), box-shadow var(--transition-douce), border-color var(--transition-douce);
+}
+.offer-list-items li::before {
+  content: counter(item, decimal-leading-zero);
+  width: 38px; height: 38px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-titre);
+  font-size: 0.82rem; font-weight: 700; color: white;
+  background: linear-gradient(135deg, var(--violet), var(--corail));
+  box-shadow: 0 8px 16px -8px var(--violet-glow);
+  flex-shrink: 0;
+}
+.offer-list-items li::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.85) 50%, transparent 70%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+.offer-list-items li:hover {
+  transform: translateX(6px);
+  border-color: var(--violet);
+  box-shadow: 0 20px 34px -18px rgba(75,47,209,0.55);
+}
+
+.offer-list.js-anim:not(.in-view) .offer-list-text > *,
+.offer-list.js-anim:not(.in-view) .offer-list-items li { opacity: 0; }
+
+.offer-list.js-anim.in-view .offer-list-text > * {
+  animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+.offer-list.js-anim.in-view .offer-list-items li {
+  animation: slideBlurIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 110ms + 100ms);
+}
+.offer-list.js-anim.in-view .offer-list-items li::after {
+  animation: sheen 1.1s ease-out 1 backwards;
+  animation-delay: calc(var(--i, 0) * 110ms + 700ms);
+}
+.offer-list.js-anim.in-view .offer-list-items li::before {
+  animation: badgeFloat 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 250ms + 1s);
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes slideBlurIn {
+  from { opacity: 0; transform: translateX(48px) scale(0.94); filter: blur(10px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes sheen { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+@keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+/* ===========================
+   SECTEURS — clic : la carte monte, les autres se floutent
+   =========================== */
+#sectors-track { padding-top: 34px; padding-bottom: 34px; }
+#sectors-track .sector-card {
+  cursor: pointer;
+  outline: none;
+  transition: transform var(--transition-elastique), box-shadow var(--transition-douce), filter 0.5s ease, opacity 0.5s ease;
+}
+#sectors-track .sector-card:focus-visible { box-shadow: 0 0 0 3px var(--corail); }
+
+#sectors-track.has-pick .sector-card:not(.is-picked) {
+  filter: blur(6px) saturate(0.75);
+  opacity: 0.45;
+  transform: scale(0.93);
+}
+#sectors-track.has-pick .sector-card:not(.is-picked):hover { filter: blur(2px) saturate(0.9); opacity: 0.8; }
+
+#sectors-track .sector-card.is-picked {
+  z-index: 3;
+  transform: translateY(-14px) scale(1.05);
+  box-shadow: 0 34px 60px -20px var(--violet-glow), 0 0 0 1px rgba(255,122,89,0.35);
+}
+#sectors-track .sector-card.is-picked::before { opacity: 1; }
+#sectors-track .sector-card.is-picked .sector-media { background-size: 120%; }
+#sectors-track .sector-card.is-picked .sector-media-shade {
+  background: linear-gradient(180deg, rgba(75,47,209,0) 20%, rgba(28,27,41,0.92) 100%);
+}
+#sectors-track .sector-card.is-picked .sector-title { font-size: 1.42rem; }
+#sectors-track .sector-card.is-picked .sector-title::after { width: 64px; }
+#sectors-track .sector-card.is-picked .sector-items { opacity: 1; }
+
+.sector-title { transition: font-size 0.4s ease; }
+.sector-title::after { transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1); }
+
+.sector-check {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--vert-succes); color: white; font-weight: 800; font-size: 1rem;
+  box-shadow: 0 8px 18px rgba(47,190,122,0.5);
+  transform: scale(0) rotate(-40deg);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.is-picked .sector-check { transform: scale(1) rotate(0); }
+
+.sector-cta {
+  position: relative; z-index: 2;
+  display: flex; align-items: center; gap: 8px; width: fit-content;
+  max-height: 0; opacity: 0; overflow: hidden;
+  padding: 0 16px; margin-top: 0;
+  border-radius: 999px;
+  background: white; color: var(--violet-fonce);
+  font-size: 0.82rem; font-weight: 700; white-space: nowrap;
+  transition: max-height 0.5s ease, opacity 0.4s ease 0.1s, padding 0.5s ease, margin-top 0.5s ease;
+}
+.sector-cta b { display: inline-block; color: var(--corail); animation: ctaArrowNudge 1.2s ease-in-out infinite; }
+.is-picked .sector-cta { max-height: 46px; opacity: 1; padding: 11px 16px; margin-top: 12px; }
+
+/* ===========================
+   BOUTON « COMPTE GRATUIT » — pilule accrocheuse
+   =========================== */
+.plan-cta-note {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding: 13px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+  background: linear-gradient(120deg, rgba(255,122,89,0.16), rgba(108,76,241,0.14));
+  border: 1.5px solid rgba(232,95,63,0.4);
+  animation: ctaGlow 2.4s ease-out infinite;
+}
+.plan-cta-note::after {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.65) 50%, transparent 65%);
+  transform: translateX(-130%);
+  animation: sheen 2.8s ease-in-out 1s infinite;
+}
+.plan-cta-note:hover,
+.plan-cta-note:focus-visible {
+  color: white;
+  background: linear-gradient(120deg, var(--corail), var(--violet));
+  border-color: transparent;
+}
+.plan-cta-note--light {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,220,207,0.5);
+}
+.plan-cta-note--light:hover,
+.plan-cta-note--light:focus-visible {
+  color: white;
+  background: linear-gradient(120deg, var(--corail), var(--violet));
+  border-color: transparent;
+}
+@keyframes ctaGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(255,122,89,0.5); }
+  70%  { box-shadow: 0 0 0 12px rgba(255,122,89,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,122,89,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-hint b, .video-live, .sector-cta b, .plan-cta-note, .plan-cta-note::after { animation: none; }
+  .offer-list-items li, .offer-list-items li::before, .offer-list-items li::after, .sector-card, .sector-check, .sector-cta { transition: none !important; }
+  .sectors-panel, .sectors-btn, .sectors-btn::before, .sectors-btn-icon { transition: none !important; }
+}
+
+/* ===========================
+   MUSIQUE — flèche qui descend vers le bouton son
+   (« Vous pouvez arrêter la musique ici »)
+   =========================== */
+.sound-hint {
+  position: fixed;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: calc(max(20px, env(safe-area-inset-bottom)) + 44px + 8px);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: calc(100vw - 40px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-18px);
+  pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.6s;
+}
+.sound-hint.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.sound-hint-text {
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: var(--anthracite);
+  color: white;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.35;
+  box-shadow: 0 14px 30px -10px rgba(28,27,41,0.5);
+}
+.sound-hint-arrow {
+  margin-left: 14px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--corail);
+  animation: soundArrowDown 1s ease-in-out infinite;
+}
+.sound-toggle.is-hinted { animation: soundRing 1.6s ease-out infinite; }
+
+@keyframes soundArrowDown {
+  0%, 100% { transform: translateY(-4px); }
+  50%      { transform: translateY(6px); }
+}
+@keyframes soundRing {
+  0%   { box-shadow: 0 8px 22px rgba(28,27,41,0.14), 0 0 0 0 rgba(255,122,89,0.6); }
+  70%  { box-shadow: 0 8px 22px rgba(28,27,41,0.14), 0 0 0 14px rgba(255,122,89,0); }
+  100% { box-shadow: 0 8px 22px rgba(28,27,41,0.14), 0 0 0 0 rgba(255,122,89,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sound-hint-arrow, .sound-toggle.is-hinted { animation: none; }
+  .sound-hint { transition: none; }
+}
+
+/* ===========================
+   TARIFS — ligne « Site web avec domaine » (après « Sur devis »)
+   =========================== */
+.tier--web {
+  grid-column: 1 / -1;
+  border-left-color: var(--violet-fonce);
+  background: linear-gradient(120deg, #F3EEFC 0%, #FFF1EC 100%);
+}
+.tier--web .tier-range { color: var(--violet-fonce); }
+.tier--web .tier-line { font-size: 0.9rem; font-weight: 600; }
+.tier--web .tier-line b { font-size: 1.2rem; }
+
+/* ===========================
+   BLOC CITATION (« Chaque bâtisseur… ») — fond vivant
+   Le fond change tout seul, de deux façons à la fois :
+   1) les couleurs glissent (violet → nuit → corail → violet)
+   2) deux halos de lumière (corail et violet clair) se promènent
+      dans le bloc, en sens contraires
+   =========================== */
+.mouvement {
+  background: linear-gradient(120deg,
+    var(--violet-fonce) 0%,
+    var(--violet) 18%,
+    var(--anthracite) 38%,
+    var(--noir-profond) 50%,
+    #B8432A 68%,
+    var(--violet-fonce) 84%,
+    var(--violet) 100%);
+  background-size: 400% 400%;
+  animation: mouvementColors 20s ease-in-out infinite;
+}
+.mouvement::before,
+.mouvement::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  will-change: left, top;
+}
+.mouvement::before {
+  width: 340px; height: 340px;
+  background: rgba(255,122,89,0.55);
+  animation: mouvementBlobA 14s ease-in-out infinite alternate;
+}
+.mouvement::after {
+  width: 300px; height: 300px;
+  background: rgba(156,134,247,0.6);
+  animation: mouvementBlobB 17s ease-in-out infinite alternate;
+}
+.mouvement .quote-mark { color: #FFDCCF; }
+.mouvement .orb { display: none; }
+
+@keyframes mouvementColors {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes mouvementBlobA {
+  0%   { left: -12%; top: -45%; }
+  50%  { left: 38%;  top: 35%; }
+  100% { left: 72%;  top: -10%; }
+}
+@keyframes mouvementBlobB {
+  0%   { right: -12%; bottom: -45%; }
+  50%  { right: 40%;  bottom: 30%; }
+  100% { right: 70%;  bottom: -15%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mouvement, .mouvement::before, .mouvement::after { animation: none; }
+}

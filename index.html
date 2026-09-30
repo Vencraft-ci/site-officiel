@@ -5,31 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Vencraft-CI — Votre business, notre art</title>
 <meta name="description" content="Vencraft-CI accompagne les commerçants et entrepreneurs de Côte d'Ivoire avec des outils simples pour gérer, vendre et grandir.">
-
 <meta property="og:title" content="Vencraft-CI — Votre business, notre art">
 <meta property="og:description" content="Des outils simples pour gérer, vendre et grandir votre business en Côte d'Ivoire.">
 <meta property="og:image" content="images/preview.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="images/preview.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/extra.css">
 <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 <body>
 
-<!-- Préchargeur : compteur + rideau de révélation -->
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader-mark">Vencraft-CI</div>
   <div class="preloader-count"><span id="preloader-number">0</span><span class="preloader-percent">%</span></div>
   <div class="preloader-bar"><span id="preloader-fill"></span></div>
 </div>
 
-<!-- Texture grain premium (bruit subtil, plaqué sur tout le site) -->
 <svg class="grain-source" width="0" height="0">
   <filter id="grain-filter">
     <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="noise"></feTurbulence>
@@ -38,14 +34,11 @@
 </svg>
 <div class="grain-overlay" aria-hidden="true"></div>
 
-<!-- Curseur personnalisé (desktop uniquement) -->
 <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
-<!-- Barre de progression de lecture -->
 <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-fill"></span></div>
 
-<!-- Barre de navigation -->
 <nav class="topnav">
   <a href="#hero" class="topnav-logo">
     <img src="images/logo-wordmark.png" alt="Vencraft-CI — Votre business, notre art">
@@ -61,14 +54,12 @@
   </div>
 </nav>
 
-<!-- CTA flottant permanent -->
 <a href="https://wa.me/2250151030957?text=Bonjour%2C%20je%20viens%20du%20site%20Vencraft-CI%20et%20j%27aimerais%20en%20savoir%20plus%20sur%20vos%20services." target="_blank" rel="noopener" class="floating-cta" data-magnetic data-magnetic-strength="0.6" aria-label="Discuter sur WhatsApp">
   <span class="floating-cta-ring"></span>
   <span class="floating-cta-ring floating-cta-ring--delay"></span>
   <span class="btn-icon">💬</span>
 </a>
 
-<!-- Contrôle du son -->
 <button id="sound-toggle" class="sound-toggle" data-magnetic data-magnetic-strength="0.5" aria-label="Activer le son" aria-pressed="false">
   <svg id="icon-muted" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2">
     <path d="M11 5 6 9H3v6h3l5 4V5Z"/>
@@ -95,24 +86,20 @@
         <span class="h1-line" data-split="chars">Aux côtés de ceux</span>
         <span class="h1-line h1-accent" data-split="chars">qui bâtissent.</span>
       </h1>
-
       <p class="hero-sub hero-in hero-in--2">
         Vencraft-CI accompagne les commerçants et entrepreneurs de Côte d'Ivoire
         avec des outils simples pour <strong>gérer</strong>, <strong>vendre</strong> et <strong>grandir</strong>.
       </p>
-
       <div class="hero-actions hero-in hero-in--3">
-        <a href="#offres" class="btn btn-primary" data-magnetic>Découvrir Vencraft</a>
+        <a href="#offres" class="btn btn-primary" data-magnetic>Découvrir Vencraft-CI</a>
         <a href="#contact" class="btn btn-outline" data-magnetic>Nous contacter</a>
       </div>
-
       <div class="hero-chips hero-in hero-in--4">
-        <span>Simple</span>
-        <span>Rapide</span>
-        <span>Humain</span>
+        <span class="chip chip--violet">Simple</span>
+        <span class="chip chip--corail">Rapide</span>
+        <span class="chip chip--vert">Humain</span>
       </div>
     </div>
-
     <div class="hero-visual image-placeholder hero-in hero-in--5" data-tilt data-tilt-max="8" aria-hidden="true">
       <div class="photo-overlay"></div>
       <div class="hero-visual-caption">
@@ -124,7 +111,6 @@
       </div>
     </div>
   </div>
-
   <div class="hero-scrollcue hero-in hero-in--6" aria-hidden="true">
     <span></span>
     <p>Défiler</p>
@@ -140,7 +126,7 @@
     <div class="presentation-text reveal reveal-right">
       <span class="section-mark" aria-hidden="true"></span>
       <h2 data-split="words">L'art de bâtir, simplifié.</h2>
-      <p>Chaque jour, des commerçants se lèvent tôt pour faire grandir leur activité. Vencraft leur donne les outils pour vendre, gérer et avancer l'esprit tranquille.</p>
+      <p>Chaque jour, des commerçants se lèvent tôt pour faire grandir leur activité. Vencraft-CI leur donne les outils pour vendre, gérer et avancer l'esprit tranquille.</p>
     </div>
   </div>
 </section>
@@ -154,92 +140,130 @@
       <h2 data-split="words">Ce que nous proposons</h2>
     </div>
 
-    <!-- Offre 1 : catalogues, présentée en simple liste -->
+    <!-- Offre 1 : catalogues + secteurs (un seul bloc) -->
     <div class="offer offer-list glow-card reveal reveal-up">
       <div class="offer-list-text">
         <h3>Votre commerce mérite mieux qu'un simple statut WhatsApp.</h3>
         <p>Nous créons des catalogues web et mini-sites modernes pour présenter vos produits, vos services et votre activité de manière professionnelle.</p>
         <a href="#contact" class="btn btn-outline" data-magnetic>Je veux mon catalogue</a>
       </div>
-      <ul class="offer-list-items reveal-stagger">
+      <ul class="offer-list-items">
         <li>Site vitrine sur mesure</li>
         <li>Catalogue de vente en ligne</li>
         <li>Galerie photos de vos produits</li>
         <li>Un lien unique à partager partout</li>
       </ul>
 
-      <div class="offer-list-sectors">
-        <button type="button" class="sectors-btn" id="sectors-btn" data-magnetic data-magnetic-strength="0.4" aria-expanded="false" aria-controls="sectors-panel">
-          <span>Voir les secteurs que nous accompagnons</span>
-          <span class="sectors-btn-icon" aria-hidden="true"></span>
-        </button>
-        <div class="sectors-panel" id="sectors-panel">
-          <ul class="sectors-grid">
-            <li style="--i:1" data-tilt data-tilt-max="14"><span class="sector-icon">🔌</span><span class="sector-name">Électroménager</span></li>
-            <li style="--i:2" data-tilt data-tilt-max="14"><span class="sector-icon">👗</span><span class="sector-name">Mode</span></li>
-            <li style="--i:3" data-tilt data-tilt-max="14"><span class="sector-icon">💎</span><span class="sector-name">Bijouterie</span></li>
-            <li style="--i:4" data-tilt data-tilt-max="14"><span class="sector-icon">🍽️</span><span class="sector-name">Restaurant</span></li>
-            <li style="--i:5" data-tilt data-tilt-max="14"><span class="sector-icon">🍲</span><span class="sector-name">Traiteur</span></li>
-            <li style="--i:6" data-tilt data-tilt-max="14"><span class="sector-icon">💇</span><span class="sector-name">Coiffure &amp; Beauté</span></li>
-            <li style="--i:7" data-tilt data-tilt-max="14"><span class="sector-icon">🏠</span><span class="sector-name">Immobilier</span></li>
-            <li style="--i:8" data-tilt data-tilt-max="14"><span class="sector-icon">🚗</span><span class="sector-name">Automobile</span></li>
-            <li style="--i:9" data-tilt data-tilt-max="14"><span class="sector-icon">📱</span><span class="sector-name">Téléphonie</span></li>
-            <li style="--i:10" data-tilt data-tilt-max="14"><span class="sector-icon">🛋️</span><span class="sector-name">Meubles</span></li>
-            <li style="--i:11" data-tilt data-tilt-max="14"><span class="sector-icon">🛒</span><span class="sector-name">Alimentation</span></li>
-            <li style="--i:12" data-tilt data-tilt-max="14"><span class="sector-icon">🧱</span><span class="sector-name">Matériaux de construction</span></li>
-            <li style="--i:13" data-tilt data-tilt-max="14"><span class="sector-icon">🛠️</span><span class="sector-name">Services</span></li>
-            <li style="--i:14" data-tilt data-tilt-max="14"><span class="sector-icon">💊</span><span class="sector-name">Pharmacie &amp; Parapharmacie</span></li>
-            <li style="--i:15" data-tilt data-tilt-max="14"><span class="sector-icon">🧵</span><span class="sector-name">Artisanat</span></li>
-            <li style="--i:16" data-tilt data-tilt-max="14"><span class="sector-icon">🎉</span><span class="sector-name">Événementiel</span></li>
-            <li style="--i:17" data-tilt data-tilt-max="14"><span class="sector-icon">✨</span><span class="sector-name">Autres</span></li>
-          </ul>
+    </div>
+
+    <!-- Secteurs : bloc séparé (secteurs toujours visibles, tarifs dépliants) -->
+    <div class="offer offer-sectors reveal reveal-up">
+      <span class="section-mark" aria-hidden="true"></span>
+      <p class="block-kicker">Secteurs que nous accompagnons</p>
+      <h3 class="block-title">Choisissez votre secteur, voyez votre tarif</h3>
+
+      <div class="hscroll" data-hscroll>
+        <div class="hs-track" id="sectors-track"></div>
+        <div class="hs-foot"><div class="hs-bar"><span></span></div><p class="hs-hint">Faites glisser <b>→</b></p></div>
+      </div>
+
+      <button type="button" class="sectors-btn" id="sectors-btn" aria-expanded="false" aria-controls="sectors-panel">
+        <span>Voir les tarifs</span>
+        <span class="sectors-btn-icon" aria-hidden="true"></span>
+      </button>
+
+      <div class="sectors-panel" id="sectors-panel" role="region" aria-label="Tarifs">
+        <div class="tariff-panel glow-card">
+          <p class="tariff-label">Tarif par produits ou articles</p>
+          <div class="tariff-grid">
+            <div class="tier"><p class="tier-range">10 à 20 articles</p>
+              <p class="tier-line"><span>Infos déjà organisées</span><b>20 000 F</b></p>
+              <p class="tier-line"><span>Infos non organisées</span><b>25 000 F</b></p></div>
+            <div class="tier"><p class="tier-range">20 à 40 articles</p>
+              <p class="tier-line"><span>Infos déjà organisées</span><b>40 000 F</b></p>
+              <p class="tier-line"><span>Infos non organisées</span><b>45 000 F</b></p></div>
+            <div class="tier"><p class="tier-range">40 à 100 articles</p>
+              <p class="tier-line"><span>Organisation incluse</span><b>65 000 F</b></p></div>
+            <div class="tier tier--devis"><p class="tier-range">Plus de 100 articles</p>
+              <p class="tier-line"><span>Tarif</span><b>Sur devis</b></p></div>
+            <div class="tier tier--web"><p class="tier-range">Site web avec nom de domaine</p>
+              <p class="tier-line"><span>Tarif</span><b>À partir de 150 000 F</b></p></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Offre 2 : logiciel de gestion, deux formules -->
+    <!-- Offre 2 : logiciel de gestion + vidéo -->
     <div class="offer offer-pricing reveal reveal-up">
       <div class="offer-pricing-head">
-        <h3>Vencraft, votre caisse et votre stock simplifiés</h3>
-        <p>Gérez vos ventes, votre stock et votre argent depuis votre téléphone ou votre ordinateur, sans complications.</p>
+        <h3>Vencraft-CI, votre caisse et votre stock simplifiés</h3>
+        <p>Vendez vite, même sans internet. Votre chiffre s'affiche sur <strong>n'importe quel appareil</strong> : connectez-vous une seule fois, le reste marche hors connexion.</p>
         <span class="trial-badge">30 jours gratuits sur les deux formules</span>
       </div>
 
-      <div class="plans reveal-stagger">
-        <div class="plan" data-tilt data-tilt-max="7">
-          <p class="plan-name">Essentiel</p>
-          <p class="plan-price">4 900 FCFA<span>/mois</span></p>
-          <ul class="plan-features">
-            <li>Gestion produits &amp; stock</li>
-            <li>Ventes &amp; rapports</li>
-            <li>1 employé</li>
-          </ul>
-          <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="btn btn-outline" data-magnetic>Choisir Essentiel</a>
-          <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="plan-cta-note" data-magnetic data-magnetic-strength="0.25">
-            Créez votre compte gratuitement<span class="plan-cta-arrow">→</span>
-          </a>
-        </div>
+      <div class="hscroll" data-hscroll>
+        <div class="hs-track hs-track--plans">
+          <div class="plan hs-item" data-tilt data-tilt-max="7">
+            <p class="plan-name">Essentiel</p>
+            <p class="plan-price">2 450 FCFA<span>/mois</span></p>
+            <p class="plan-price-alt">ou <b>14 700 FCFA</b> pour 6 mois</p>
+            <ul class="plan-features">
+              <li>Gestion produits &amp; stock</li>
+              <li>Ventes &amp; rapports</li>
+              <li>1 employé</li>
+              <li>Résumé du jour en un clic sur WhatsApp</li>
+            </ul>
+            <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="btn btn-outline" data-magnetic>Choisir Essentiel</a>
+            <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="plan-cta-note" data-magnetic data-magnetic-strength="0.25">Créez votre compte gratuitement<span class="plan-cta-arrow">→</span></a>
+          </div>
 
-        <div class="plan plan-highlight glow-card" data-tilt data-tilt-max="7">
-          <span class="plan-tag">Recommandé</span>
-          <p class="plan-name">Pro</p>
-          <p class="plan-price">8 900 FCFA<span>/mois</span></p>
-          <ul class="plan-features">
-            <li>Tout Essentiel</li>
-            <li>Plusieurs employés</li>
-            <li>Rôles &amp; permissions</li>
-            <li>Mes dépenses (entreprise &amp; personnelles)</li>
-          </ul>
-          <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="btn btn-contact" data-magnetic>Choisir Pro</a>
-          <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="plan-cta-note plan-cta-note--light" data-magnetic data-magnetic-strength="0.25">
-            Créez votre compte gratuitement<span class="plan-cta-arrow">→</span>
-          </a>
+          <div class="plan plan-highlight glow-card hs-item" data-tilt data-tilt-max="7">
+            <span class="plan-tag">Recommandé</span>
+            <p class="plan-name">Pro</p>
+            <p class="plan-price">4 900 FCFA<span>/mois</span></p>
+            <p class="plan-price-alt">ou <b>29 400 FCFA</b> pour 6 mois</p>
+            <ul class="plan-features">
+              <li>Tout Essentiel</li>
+              <li>Plusieurs employés</li>
+              <li>Rôles &amp; permissions</li>
+              <li>Mes dépenses (entreprise &amp; personnelles)</li>
+              <li>Résumé du jour en un clic sur WhatsApp</li>
+            </ul>
+            <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="btn btn-contact" data-magnetic>Choisir Pro</a>
+            <a href="https://vencraft-ci.web.app/" target="_blank" rel="noopener" class="plan-cta-note plan-cta-note--light" data-magnetic data-magnetic-strength="0.25">Créez votre compte gratuitement<span class="plan-cta-arrow">→</span></a>
+          </div>
+
+          <div class="video-card hs-item">
+            <div class="video-frame">
+              <video controls preload="none" playsinline poster="images/video-poster.jpg">
+                <source src="videos/presentation-vencraft.mp4" type="video/mp4">
+              </video>
+              <span class="video-glow" aria-hidden="true"></span>
+            </div>
+            <div class="video-caption">
+              <span class="video-live"></span>
+              <div><p>Vencraft-CI en 1 minute</p><span>Regardez comment ça marche</span></div>
+            </div>
+          </div>
         </div>
+        <div class="hs-foot"><div class="hs-bar"><span></span></div><p class="hs-hint">Faites glisser <b>→</b></p></div>
+      </div>
+    </div>
+
+    <!-- Offre 3 : Stock Lite, logiciel à vie -->
+    <div class="offer offer-lite reveal reveal-up">
+      <div class="offer-pricing-head">
+        <span class="section-mark" aria-hidden="true"></span>
+        <h3>Stock Lite : payez une fois, gardez-le à vie</h3>
+        <p>Un logiciel installé sur votre ordinateur. Toutes vos informations sont sur un seul poste, et tout est sauvegardé. Pas d'abonnement.</p>
+      </div>
+      <div class="hscroll" data-hscroll>
+        <div class="hs-track" id="lite-track"></div>
+        <div class="hs-foot"><div class="hs-bar"><span></span></div><p class="hs-hint">Faites glisser <b>→</b></p></div>
       </div>
     </div>
   </div>
 </section>
-
 
 <!-- Section 4 — Le mouvement -->
 <section class="mouvement image-placeholder reveal reveal-scale" id="mouvement">
@@ -257,17 +281,12 @@
     <h2 class="reveal reveal-up" data-split="words">Parlons de votre business</h2>
     <p class="reveal reveal-up">Un appel ou un message suffit pour commencer.</p>
     <div class="contact-buttons reveal reveal-up">
-      <a href="tel:0798016927" class="btn btn-contact" data-magnetic>
-        <span class="btn-icon">📞</span> Appeler maintenant
-      </a>
-      <a href="https://wa.me/2250151030957?text=Bonjour%2C%20je%20viens%20du%20site%20Vencraft-CI%20et%20j%27aimerais%20en%20savoir%20plus%20sur%20vos%20services." class="btn btn-contact btn-contact--whatsapp" data-magnetic target="_blank" rel="noopener">
-        <span class="btn-icon">💬</span> Écrire sur WhatsApp
-      </a>
+      <a href="tel:0798016927" class="btn btn-contact" data-magnetic><span class="btn-icon">📞</span> Appeler maintenant</a>
+      <a href="https://wa.me/2250151030957?text=Bonjour%2C%20je%20viens%20du%20site%20Vencraft-CI%20et%20j%27aimerais%20en%20savoir%20plus%20sur%20vos%20services." class="btn btn-contact btn-contact--whatsapp" data-magnetic target="_blank" rel="noopener"><span class="btn-icon">💬</span> Écrire sur WhatsApp</a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
   <img src="images/logo-white.png" alt="Vencraft-CI" class="footer-logo-img">
   <p class="footer-tagline">Votre business, notre art</p>
@@ -286,5 +305,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/script.js"></script>
+<script src="js/extra.js"></script>
 </body>
 </html>
