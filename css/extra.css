@@ -544,3 +544,23 @@
 @media (prefers-reduced-motion: reduce) {
   .mouvement, .mouvement::before, .mouvement::after { animation: none; }
 }
+
+/* ===========================
+   LIGNE MISE EN AVANT — « Google Maps & Yango »
+   =========================== */
+.offer-list-items li.li-highlight {
+  background: linear-gradient(120deg, var(--corail) 0%, var(--corail-fonce) 100%);
+  border-color: transparent;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 16px 32px -14px var(--corail-glow);
+}
+.offer-list-items li.li-highlight::before {
+  background: white;
+  color: var(--corail-fonce);
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.25);
+}
+.offer-list-items li.li-highlight:hover {
+  border-color: transparent;
+  box-shadow: 0 22px 38px -14px var(--corail-glow);
+}
