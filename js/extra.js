@@ -72,6 +72,39 @@ if (sTrack) sTrack.innerHTML = SECTORS.map(sectorCard).join('');
 const lTrack = document.getElementById('lite-track');
 if (lTrack) lTrack.innerHTML = LITE.map(liteCard).join('');
 
+// ===========================
+// Guides gratuits : l'accès (lecture + téléchargement) passe par l'application.
+// Images : images/guide1.jpg ... images/guide4.jpg (affichage automatique)
+// ===========================
+const APP_URL = 'https://vencraft-ci.web.app/';
+const GUIDES = [
+  { n: 1, title: 'Ne perdez plus le fil de vos commandes' },
+  { n: 2, title: 'Moins de messages, des commandes plus complètes' },
+  { n: 3, title: 'C\'est combien ? Et puis plus rien…' },
+  { n: 4, title: 'Arrêtez d\'envoyer vos photos une par une' }
+];
+
+function guideLink(n, action) {
+  return `${APP_URL}?guide=${n}&action=${action}`;
+}
+
+function guideCard(g) {
+  return `
+  <article class="guide-card hs-item">
+    <a class="guide-cover" href="${guideLink(g.n, 'lecture')}" target="_blank" rel="noopener" aria-label="Lire : ${esc(g.title)}">
+      <img src="images/guide${g.n}.jpg" alt="Couverture : ${esc(g.title)}" loading="lazy" width="800" height="1200">
+    </a>
+    <h3 class="guide-title">${esc(g.title)}</h3>
+    <div class="guide-actions">
+      <a class="guide-btn guide-btn--read" href="${guideLink(g.n, 'lecture')}" target="_blank" rel="noopener">Lecture</a>
+      <a class="guide-btn guide-btn--dl" href="${guideLink(g.n, 'telecharger')}" target="_blank" rel="noopener">Télécharger</a>
+    </div>
+  </article>`;
+}
+
+const gTrack = document.getElementById('guides-track');
+if (gTrack) gTrack.innerHTML = GUIDES.map(guideCard).join('');
+
 // Barres de défilement horizontal (couleurs du site)
 document.querySelectorAll('[data-hscroll]').forEach((box) => {
   const track = box.querySelector('.hs-track');
@@ -332,4 +365,124 @@ document.querySelectorAll('.plan-cta-note').forEach((a) => {
     }
   }
   window.addEventListener('scroll', onScrollHint, { passive: true });
+})();
+
+// ===========================
+// GUIDES
+//  • Guide 1 (gratuit) : lien normal vers l'application (même lien qu'Essentiel / Pro),
+//    c'est là-bas que le décompte permet la lecture.
+//  • Guides 2, 3, 4 : au clic sur Lecture / Télécharger / couverture, question
+//    « Essentiel, Pro ou catalogue Vencraft-CI ? »  →  OUI : WhatsApp  |  NON : message.
+// (ajout uniquement : rien de ce qui précède n'est modifié)
+// ===========================
+(function () {
+  if (!gTrack) return;
+
+  const WA_NUMBER = '2250151030957';   // même numéro que le bouton WhatsApp du site
+  const FREE_GUIDE = 4;                // numéro du guide gratuit (« Arrêtez d'envoyer vos photos une par une »)
+
+  // 1) Mot à côté de chaque titre : « Gratuit » ou « Réservé aux clients »
+  gTrack.querySelectorAll('.guide-card').forEach((card, i) => {
+    const t = card.querySelector('.guide-title');
+    const g = GUIDES[i];
+    if (!t || !g) return;
+    const free = g.n === FREE_GUIDE;
+    const tag = document.createElement('span');
+    tag.className = 'guide-tag ' + (free ? 'guide-tag--free' : 'guide-tag--client');
+    tag.textContent = free ? 'Gratuit' : 'Réservé aux clients';
+    t.appendChild(document.createTextNode(' '));
+    t.appendChild(tag);
+  });
+
+  // 2) Fenêtre de question (créée une seule fois)
+  const box = document.createElement('div');
+  box.className = 'gflow';
+  box.hidden = true;
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  box.innerHTML = `
+    <div class="gflow-card">
+      <button type="button" class="gflow-close" aria-label="Fermer">×</button>
+
+      <div class="gflow-step" data-step="ask">
+        <p class="gflow-question">Êtes-vous en mode <b>Essentiel</b>, en mode <b>Pro</b>, ou avez-vous un <b>catalogue Vencraft-CI</b> ?</p>
+        <div class="gflow-actions">
+          <button type="button" class="gflow-btn gflow-btn--read" data-answer="oui">Oui</button>
+          <button type="button" class="gflow-btn gflow-btn--dl" data-answer="non">Non</button>
+        </div>
+      </div>
+
+      <div class="gflow-step" data-step="no" hidden>
+        <p class="gflow-question">Pour bénéficier du guide, vous devez être en mode <b>Essentiel</b>, en mode <b>Pro</b>, ou avoir un <b>catalogue Vencraft-CI</b>.</p>
+        <div class="gflow-actions">
+          <a class="gflow-btn gflow-btn--read" href="#offres" data-close>Voir les offres</a>
+          <button type="button" class="gflow-btn gflow-btn--dl" data-close>Fermer</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(box);
+
+  const card = box.querySelector('.gflow-card');
+  let current = null;   // { guide, action }
+  let lastFocus = null;
+
+  function showStep(name) {
+    box.querySelectorAll('.gflow-step').forEach((s) => { s.hidden = s.dataset.step !== name; });
+    const first = box.querySelector(`.gflow-step[data-step="${name}"] .gflow-btn`);
+    (first || box.querySelector('.gflow-close')).focus({ preventScroll: true });
+  }
+
+  function closeFlow() {
+    box.hidden = true;
+    document.body.style.overflow = '';
+    current = null;
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+
+  function openFlow(guide, action) {
+    current = { guide, action };
+    lastFocus = document.activeElement;
+    box.hidden = false;
+    document.body.style.overflow = 'hidden';
+    showStep('ask');
+  }
+
+  // 3) Clics sur les guides : le guide gratuit garde son lien ; les autres ouvrent la question
+  gTrack.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    if (gTrack._moved) { e.preventDefault(); return; }   // simple glissement, pas un clic
+    const idx = Array.prototype.indexOf.call(gTrack.children, a.closest('.guide-card'));
+    const g = GUIDES[idx];
+    if (!g || g.n === FREE_GUIDE) return;                // gratuit : lien normal vers l'application
+    e.preventDefault();
+    openFlow(g, a.classList.contains('guide-btn--dl') ? 'telecharger' : 'lecture');
+  });
+
+  // 4) Dans la fenêtre
+  box.addEventListener('click', (e) => {
+    if (e.target === box || e.target.closest('.gflow-close') || e.target.closest('[data-close]')) { closeFlow(); return; }
+    const ans = e.target.closest('[data-answer]');
+    if (!ans || !current) return;
+    if (ans.dataset.answer === 'oui') {
+      const verbe = current.action === 'telecharger' ? 'télécharger' : 'lire';
+      const msg = `Bonjour, je suis en mode Essentiel / Pro ou j'ai un catalogue Vencraft-CI. Je souhaite ${verbe} le guide « ${current.guide.title} ».`;
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+      closeFlow();
+    } else {
+      showStep('no');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (box.hidden) return;
+    if (e.key === 'Escape') { closeFlow(); return; }
+    if (e.key === 'Tab') {   // le focus reste dans la fenêtre
+      const f = Array.from(card.querySelectorAll('button, a[href]')).filter((n) => n.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 })();
